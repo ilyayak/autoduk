@@ -1,0 +1,173 @@
+@font-face {
+    font-family: lada;
+    /* Имя шрифта */
+    src: url(https://avtoduk.ru/upload/LADA.otf);
+    /* Путь к файлу со шрифтом */
+}
+
+
+/***CUSTOM CSS RULES FOR YOUR SITE***/
+.promotions__item-image {
+    background-size: contain;
+}
+
+.promotions__item-image-wrap {
+    height: 102px;
+}
+
+/***CUSTOM CSS RULES FOR YOUR SITE***/
+.header_flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media (min-width: 788px) {
+    .header_flex {
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+
+.header_part_1 {
+    padding: 10px 30px;
+}
+
+
+.header_part_3 {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px 20px;
+}
+
+@media (min-width: 788px) {
+    .header_part_3 {
+        display: flex;
+    }
+
+    .header_part_2 {
+        margin-left: 0px;
+        flex: auto
+    }
+
+}
+
+.buycars {
+
+    flex-direction: column;
+}
+
+@media (min-width: 1254px) {
+    .buycars {
+        padding-top: 24px;
+    }
+}
+
+.buycars_title {
+    text-align: center;
+    margin-bottom: 4px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.buycars_list_cars {
+
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.buycars_list_cars a {
+    /* display: inherit; */
+    /* margin: 20px 2px; */
+    /* text-align: center; */
+    display: flex;
+    margin: 0px 2px;
+}
+
+@media (min-width: 788px) {
+    .buycars_title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: 600;
+        color: #575b71;
+    }
+
+    .buycars_list_cars {
+        justify-content: flex-start;
+    }
+}
+
+
+.header_part_3 .fa.fa-phone {
+    margin-right: 10px;
+}
+
+.header_part_3 .contacts {
+    padding: 10px;
+}
+
+.header_part_3 .contacts .telephone p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #575b71;
+    margin: 0px;
+
+}
+
+.header_part_3 .search_callme {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header_part_3 a.callback_anch {
+    display: flex;
+    height: 31px;
+    width: 162px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-left: 22px;
+}
+
+.catalog_section_text {
+    padding: 50px 0;
+}
+
+.catalog-detail-article {
+    color: red;
+}
+
+
+.column-with-desc {
+    width: 208px;
+    height: 288px;
+    padding: 28px 20px 28px 20px;
+    border: 1px solid #E2E4F0;
+    border-radius: 4px;
+    margin: 20px 0 auto auto;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+.body_text ul.column-with-desc{
+    padding: 0px;
+}
+.column-with-desc__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+
+}
+ul.column-with-desc__list{
+    padding:0px 0px 0px 0px;
+}
+.column-with-desc__img{
+    margin-right: 14.5px;
+}
+.column-with-desc__text{
+    line-height: 20px;
+}
