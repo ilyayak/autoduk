@@ -1916,32 +1916,37 @@ $strTitle = (isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_TI
                         </div>
                     <? } ?>
                     <div class="column-with-desc">
-                        <ul class="column-with-desc__list" >
+                        <ul class="column-with-desc__list">
                             <li class="column-with-desc__item">
-                                <img class="column-with-desc__img" src="<?=SITE_TEMPLATE_PATH?>/img/box.png" alt="img">
+                                <img class="column-with-desc__img" src="<?= SITE_TEMPLATE_PATH ?>/img/box.png"
+                                     alt="img">
                                 <div class="column-with-desc__text">
                                     Отгрузка товара осуществляется после получения оплаты.
                                 </div>
                             </li>
-                            <li class="column-with-desc__item" >
-                                <img class="column-with-desc__img" src="<?=SITE_TEMPLATE_PATH?>/img/human.png" alt="img">
+                            <li class="column-with-desc__item">
+                                <img class="column-with-desc__img" src="<?= SITE_TEMPLATE_PATH ?>/img/human.png"
+                                     alt="img">
                                 <div class="column-with-desc__text">
                                     Самовывоз: г. Кемерово, ул. Баумана, д.55, к.3
                                 </div>
                             </li>
                             <li class="column-with-desc__item">
-                                <img class="column-with-desc__img" src="<?=SITE_TEMPLATE_PATH?>/img/car.png" alt="img">
+                                <img class="column-with-desc__img" src="<?= SITE_TEMPLATE_PATH ?>/img/car.png"
+                                     alt="img">
                                 <div class="column-with-desc__text">
                                     Доставка по городу Кемерово — 500 рублей.
                                 </div>
                             </li>
                             <li class="column-with-desc__item">
-                                <img class="column-with-desc__img" src="<?=SITE_TEMPLATE_PATH?>/img/location.png" alt="img">
+                                <img class="column-with-desc__img" src="<?= SITE_TEMPLATE_PATH ?>/img/location.png"
+                                     alt="img">
                                 <div class="column-with-desc__text">
                                     Бесплатная доставка до терминала транспортной компании.
                                 </div>
                             </li>
                         </ul>
+
                     </div>
                 </div>
             </div>
