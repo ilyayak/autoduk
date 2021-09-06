@@ -445,234 +445,7 @@ $strTitle = (isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_TI
                     </div>
                 </div>
                 <div class="column second">
-                    <div class="catalog-detail">
-                        <? if (!$arResult["COLLECTION"]["THIS"]) { ?>
-                            <div class="article_rating">
-                                <? //OFFERS_DETAIL_ARTICLE//?>
-                                <div class="catalog-detail-article" id="<?= $arItemIDs['ARTICLE'] ?>">
-                                    <? //OFFERS_ARTICLE//
-                                    if (isset($arResult["OFFERS"]) && !empty($arResult["OFFERS"]) && $arSetting["OFFERS_VIEW"]["VALUE"] != "LIST") {
-                                        foreach ($arResult["OFFERS"] as $key => $arOffer) { ?>
-                                            <div id="article_<?= $arItemIDs['ID'] . '_' . $arOffer['ID'] ?>"
-                                                 class="article<?= ($key == $arResult['OFFERS_SELECTED'] ? '' : ' hidden'); ?>">
-                                                <?= GetMessage(
-                                                    "CATALOG_ELEMENT_ARTNUMBER"
-                                                ) ?><?= !empty($arOffer["PROPERTIES"]["ARTNUMBER"]["VALUE"]) ? $arOffer["PROPERTIES"]["ARTNUMBER"]["VALUE"] : "-"; ?>
-                                            </div>
-                                            <?
-                                        }
-                                        //DETAIL_ARTICLE//
-                                    } else { ?>
-                                        <div class="article">
-                                            <?= GetMessage(
-                                                "CATALOG_ELEMENT_ARTNUMBER"
-                                            ) ?><?= !empty($arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) ? $arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"] : "-"; ?>
-                                        </div>
-                                    <? } ?>
-                                </div>
-                                <? //DETAIL_RATING//?>
-                                <div class="rating" itemprop="aggregateRating" itemscope
-                                     itemtype="http://schema.org/AggregateRating">
-                                    <? $frame = $this->createFrame("vote")->begin(""); ?>
-                                    <? $APPLICATION->IncludeComponent("bitrix:iblock.vote", "ajax",
-                                                                      array(
-                                                                          "DISPLAY_AS_RATING" => "vote_avg",
-                                                                          "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
-                                                                          "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-                                                                          "ELEMENT_ID" => $arResult["ID"],
-                                                                          "ELEMENT_CODE" => "",
-                                                                          "MAX_VOTE" => "5",
-                                                                          "VOTE_NAMES" => array(
-                                                                              "1",
-                                                                              "2",
-                                                                              "3",
-                                                                              "4",
-                                                                              "5"
-                                                                          ),
-                                                                          "SET_STATUS_404" => "N",
-                                                                          "CACHE_TYPE" => $arParams["CACHE_TYPE"],
-                                                                          "CACHE_TIME" => $arParams["CACHE_TIME"],
-                                                                          "CACHE_NOTES" => "",
-                                                                          "READ_ONLY" => "N"
-                                                                      ),
-                                                                      $component,
-                                                                      array("HIDE_ICONS" => "Y")
-                                    ); ?>
-                                    <? $frame->end();
-                                    if ($arResult["PROPERTIES"]["vote_count"]["VALUE"]) { ?>
-                                        <meta content="<?= round(
-                                            $arResult['PROPERTIES']['vote_sum']['VALUE'] / $arResult['PROPERTIES']['vote_count']['VALUE'],
-                                            2
-                                        ); ?>" itemprop="ratingValue"/>
-                                        <meta content="<?= $arResult['PROPERTIES']['vote_count']['VALUE'] ?>"
-                                              itemprop="ratingCount"/>
-                                    <? } else { ?>
-                                        <meta content="0" itemprop="ratingValue"/>
-                                        <meta content="0" itemprop="ratingCount"/>
-                                    <? } ?>
-                                    <meta content="0" itemprop="worstRating"/>
-                                    <meta content="5" itemprop="bestRating"/>
-                                </div>
-                            </div>
-                            <? //DETAIL_PREVIEW_TEXT//
-                            if (!empty($arResult["PREVIEW_TEXT"])) { ?>
-                                <div class="catalog-detail-preview-text" itemprop="description">
-                                    <?= $arResult["PREVIEW_TEXT"] ?>
-                                </div>
-                                <?
-                            }
-                            //DETAIL_GIFT//
-                            if (!empty($arResult["PROPERTIES"]["GIFT"]["FULL_VALUE"])) { ?>
-                                <div class="catalog-detail-gift">
-                                    <div class="h3"><?= $arResult["PROPERTIES"]["GIFT"]["NAME"] ?></div>
-                                    <? foreach ($arResult["PROPERTIES"]["GIFT"]["FULL_VALUE"] as $key => $arGift) { ?>
-                                        <div class="gift-item">
-                                            <div class="gift-image-cont">
-                                                <div class="gift-image">
-                                                    <div class="gift-image-col">
-                                                        <? if (is_array($arGift["PREVIEW_PICTURE"])) { ?>
-                                                            <img src="<?= $arGift['PREVIEW_PICTURE']['SRC'] ?>"
-                                                                 width="<?= $arGift['PREVIEW_PICTURE']['WIDTH'] ?>"
-                                                                 height="<?= $arGift['PREVIEW_PICTURE']['HEIGHT'] ?>"
-                                                                 alt="<?= $arGift['NAME'] ?>"
-                                                                 title="<?= $arGift['NAME'] ?>"/>
-                                                        <? } else { ?>
-                                                            <img src="<?= SITE_TEMPLATE_PATH ?>/images/no-photo.jpg"
-                                                                 width="70" height="70" alt="<?= $arGift['NAME'] ?>"
-                                                                 title="<?= $arGift['NAME'] ?>"/>
-                                                            <?
-                                                        } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="gift-text"><?= $arGift["NAME"] ?></div>
-                                        </div>
-                                        <?
-                                    } ?>
-                                </div>
-                                <?
-                            }
-                            //OFFERS_SELECT_PROPS//
-                            if ((isset($arResult["OFFERS"]) && !empty($arResult["OFFERS"]) && $arSetting["OFFERS_VIEW"]["VALUE"] != "LIST") || (isset($arResult["SELECT_PROPS"]) && !empty($arResult["SELECT_PROPS"]))) { ?>
-                                <div class="catalog-detail-offers-cont">
-                                    <?//OFFERS_PROPS//
-                                    if (isset($arResult["OFFERS"]) && !empty($arResult["OFFERS"]) && $arSetting["OFFERS_VIEW"]["VALUE"] != "LIST") {
-                                        $arSkuProps = array(); ?>
-                                        <div class="catalog-detail-offers" id="<?= $arItemIDs['PROP_DIV']; ?>">
-                                            <? foreach ($arResult["SKU_PROPS"] as &$arProp) {
-                                                if (!isset($arResult["OFFERS_PROP"][$arProp["CODE"]])) {
-                                                    continue;
-                                                }
-                                                $arSkuProps[] = array(
-                                                    "ID" => $arProp["ID"],
-                                                    "SHOW_MODE" => $arProp["SHOW_MODE"]
-                                                ); ?>
-                                                <div class="offer_block"
-                                                     id="<?= $arItemIDs['PROP'] . $arProp['ID']; ?>_cont">
-                                                    <div class="h3"><?= htmlspecialcharsex($arProp["NAME"]); ?></div>
-                                                    <ul id="<?= $arItemIDs['PROP'] . $arProp['ID']; ?>_list"
-                                                        class="<?= $arProp['CODE'] ?><?= $arProp['SHOW_MODE'] == 'PICT' ? ' COLOR' : ''; ?>">
-                                                        <? foreach ($arProp["VALUES"] as $arOneValue) {
-                                                            $arOneValue["NAME"] = htmlspecialcharsbx(
-                                                                $arOneValue["NAME"]
-                                                            ); ?>
-                                                            <li data-treevalue="<?= $arProp['ID'] . '_' . $arOneValue['ID']; ?>"
-                                                                data-onevalue="<?= $arOneValue['ID']; ?>"
-                                                                style="display:none;">
-														<span title="<?= $arOneValue['NAME']; ?>">
-															<? if ("TEXT" == $arProp["SHOW_MODE"]) {
-                                                                echo $arOneValue["NAME"];
-                                                            } elseif ("PICT" == $arProp["SHOW_MODE"]) {
-                                                                if (is_array($arOneValue["PICT"])) { ?>
-                                                                    <img src="<?= $arOneValue['PICT']['SRC'] ?>"
-                                                                         width="<?= $arOneValue['PICT']['WIDTH'] ?>"
-                                                                         height="<?= $arOneValue['PICT']['HEIGHT'] ?>"
-                                                                         alt="<?= $arOneValue['NAME'] ?>"
-                                                                         title="<?= $arOneValue['NAME'] ?>"/>
-                                                                <? } else { ?>
-                                                                    <i style="background:#<?= (!empty($arOneValue['HEX']) ? $arOneValue['HEX'] : 'edeef8') ?>"></i>
-                                                                    <?
-                                                                }
-                                                            } ?>
-														</span>
-                                                            </li>
-                                                            <?
-                                                        } ?>
-                                                    </ul>
-                                                    <div class="bx_slide_left" style="display:none;"
-                                                         id="<?= $arItemIDs['PROP'] . $arProp['ID'] ?>_left"
-                                                         data-treevalue="<?= $arProp['ID'] ?>"></div>
-                                                    <div class="bx_slide_right" style="display:none;"
-                                                         id="<?= $arItemIDs['PROP'] . $arProp['ID'] ?>_right"
-                                                         data-treevalue="<?= $arProp['ID'] ?>"></div>
-                                                </div>
-                                                <?
-                                            }
-                                            unset($arProp); ?>
-                                        </div>
-                                        <?
-                                    }
-                                    //SELECT_PROPS//
-                                    if (isset($arResult["SELECT_PROPS"]) && !empty($arResult["SELECT_PROPS"])) {
-                                        $arSelProps = array(); ?>
-                                        <div class="catalog-detail-offers" id="<?= $arItemIDs['SELECT_PROP_DIV']; ?>">
-                                            <? foreach ($arResult["SELECT_PROPS"] as $key => &$arProp) {
-                                                $arSelProps[] = array(
-                                                    "ID" => $arProp["ID"]
-                                                ); ?>
-                                                <div class="offer_block"
-                                                     id="<?= $arItemIDs['SELECT_PROP'] . $arProp['ID']; ?>">
-                                                    <div class="h3"><?= htmlspecialcharsex($arProp["NAME"]); ?></div>
-                                                    <ul class="<?= $arProp['CODE'] ?>">
-                                                        <? $props = array();
-                                                        foreach ($arProp["DISPLAY_VALUE"] as $arOneValue) {
-                                                            $props[$key] = array(
-                                                                "NAME" => $arProp["NAME"],
-                                                                "CODE" => $arProp["CODE"],
-                                                                "VALUE" => strip_tags($arOneValue)
-                                                            );
-                                                            $props[$key] = !empty($props[$key]) ? strtr(
-                                                                base64_encode(serialize($props[$key])),
-                                                                "+/=",
-                                                                "-_,"
-                                                            ) : ""; ?>
-                                                            <li data-select-onevalue="<?= $props[$key] ?>">
-                                                                <span><?= $arOneValue ?></span>
-                                                            </li>
-                                                            <?
-                                                        } ?>
-                                                    </ul>
-                                                </div>
-                                                <?
-                                            }
-                                            unset($arProp); ?>
-                                        </div>
-                                        <?
-                                    } ?>
-                                </div>
-                                <?
-                            }
-                            //DETAIL_ADVANTAGES//
-                            if ($inAdvantages && !empty($arResult["ADVANTAGES"])) {
-                                global $arAdvFilter;
-                                $arAdvFilter = array(
-                                    "ID" => $arResult["ADVANTAGES"],
-                                    "HIDE_ICONS" => "Y"
-                                ); ?>
-                                <? $APPLICATION->IncludeComponent("bitrix:main.include", "",
-                                                                  array(
-                                                                      "AREA_FILE_SHOW" => "file",
-                                                                      "PATH" => SITE_DIR . "include/advantages.php",
-                                                                      "AREA_FILE_RECURSIVE" => "N",
-                                                                      "EDIT_MODE" => "html",
-                                                                  ),
-                                                                  false,
-                                                                  array("HIDE_ICONS" => "Y")
-                                ); ?>
-                                <?
-                            }
-                        } ?>
-                        <div class="column three<?= ($arResult["COLLECTION"]["THIS"]) ? " colletion" : "" ?>">
+                    <div class="catalog-detail"><div class="column three<?= ($arResult["COLLECTION"]["THIS"]) ? " colletion" : "" ?>">
                             <div class="price_buy_detail" itemprop="offers" itemscope
                                  itemtype="http://schema.org/Offer">
                                 <? //OFFERS_DETAIL_PRICE//?>
@@ -1844,6 +1617,233 @@ $strTitle = (isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_TI
                                 }
                             } ?>
                         </div>
+                        <? if (!$arResult["COLLECTION"]["THIS"]) { ?>
+                            <div class="article_rating">
+                                <? //OFFERS_DETAIL_ARTICLE//?>
+                                <div class="catalog-detail-article" id="<?= $arItemIDs['ARTICLE'] ?>">
+                                    <? //OFFERS_ARTICLE//
+                                    if (isset($arResult["OFFERS"]) && !empty($arResult["OFFERS"]) && $arSetting["OFFERS_VIEW"]["VALUE"] != "LIST") {
+                                        foreach ($arResult["OFFERS"] as $key => $arOffer) { ?>
+                                            <div id="article_<?= $arItemIDs['ID'] . '_' . $arOffer['ID'] ?>"
+                                                 class="article<?= ($key == $arResult['OFFERS_SELECTED'] ? '' : ' hidden'); ?>">
+                                                <?= GetMessage(
+                                                    "CATALOG_ELEMENT_ARTNUMBER"
+                                                ) ?><?= !empty($arOffer["PROPERTIES"]["ARTNUMBER"]["VALUE"]) ? $arOffer["PROPERTIES"]["ARTNUMBER"]["VALUE"] : "-"; ?>
+                                            </div>
+                                            <?
+                                        }
+                                        //DETAIL_ARTICLE//
+                                    } else { ?>
+                                        <div class="article">
+                                            <?= GetMessage(
+                                                "CATALOG_ELEMENT_ARTNUMBER"
+                                            ) ?><?= !empty($arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]) ? $arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"] : "-"; ?>
+                                        </div>
+                                    <? } ?><div class="rating" itemprop="aggregateRating" itemscope
+                                                itemtype="http://schema.org/AggregateRating">
+                                        <? $frame = $this->createFrame("vote")->begin(""); ?>
+                                        <? $APPLICATION->IncludeComponent("bitrix:iblock.vote", "ajax",
+                                                                          array(
+                                                                              "DISPLAY_AS_RATING" => "vote_avg",
+                                                                              "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
+                                                                              "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+                                                                              "ELEMENT_ID" => $arResult["ID"],
+                                                                              "ELEMENT_CODE" => "",
+                                                                              "MAX_VOTE" => "5",
+                                                                              "VOTE_NAMES" => array(
+                                                                                  "1",
+                                                                                  "2",
+                                                                                  "3",
+                                                                                  "4",
+                                                                                  "5"
+                                                                              ),
+                                                                              "SET_STATUS_404" => "N",
+                                                                              "CACHE_TYPE" => $arParams["CACHE_TYPE"],
+                                                                              "CACHE_TIME" => $arParams["CACHE_TIME"],
+                                                                              "CACHE_NOTES" => "",
+                                                                              "READ_ONLY" => "N"
+                                                                          ),
+                                                                          $component,
+                                                                          array("HIDE_ICONS" => "Y")
+                                        ); ?>
+                                        <? $frame->end();
+                                        if ($arResult["PROPERTIES"]["vote_count"]["VALUE"]) { ?>
+                                            <meta content="<?= round(
+                                                $arResult['PROPERTIES']['vote_sum']['VALUE'] / $arResult['PROPERTIES']['vote_count']['VALUE'],
+                                                2
+                                            ); ?>" itemprop="ratingValue"/>
+                                            <meta content="<?= $arResult['PROPERTIES']['vote_count']['VALUE'] ?>"
+                                                  itemprop="ratingCount"/>
+                                        <? } else { ?>
+                                            <meta content="0" itemprop="ratingValue"/>
+                                            <meta content="0" itemprop="ratingCount"/>
+                                        <? } ?>
+                                        <meta content="0" itemprop="worstRating"/>
+                                        <meta content="5" itemprop="bestRating"/>
+                                    </div>
+                                </div>
+                                <? //DETAIL_RATING//?>
+
+                            </div>
+                            <? //DETAIL_PREVIEW_TEXT//
+                            if (!empty($arResult["PREVIEW_TEXT"])) { ?>
+                                <div class="catalog-detail-preview-text" itemprop="description">
+                                    <?= $arResult["PREVIEW_TEXT"] ?>
+                                </div>
+                                <?
+                            }
+                            //DETAIL_GIFT//
+                            if (!empty($arResult["PROPERTIES"]["GIFT"]["FULL_VALUE"])) { ?>
+                                <div class="catalog-detail-gift">
+                                    <div class="h3"><?= $arResult["PROPERTIES"]["GIFT"]["NAME"] ?></div>
+                                    <? foreach ($arResult["PROPERTIES"]["GIFT"]["FULL_VALUE"] as $key => $arGift) { ?>
+                                        <div class="gift-item">
+                                            <div class="gift-image-cont">
+                                                <div class="gift-image">
+                                                    <div class="gift-image-col">
+                                                        <? if (is_array($arGift["PREVIEW_PICTURE"])) { ?>
+                                                            <img src="<?= $arGift['PREVIEW_PICTURE']['SRC'] ?>"
+                                                                 width="<?= $arGift['PREVIEW_PICTURE']['WIDTH'] ?>"
+                                                                 height="<?= $arGift['PREVIEW_PICTURE']['HEIGHT'] ?>"
+                                                                 alt="<?= $arGift['NAME'] ?>"
+                                                                 title="<?= $arGift['NAME'] ?>"/>
+                                                        <? } else { ?>
+                                                            <img src="<?= SITE_TEMPLATE_PATH ?>/images/no-photo.jpg"
+                                                                 width="70" height="70" alt="<?= $arGift['NAME'] ?>"
+                                                                 title="<?= $arGift['NAME'] ?>"/>
+                                                            <?
+                                                        } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="gift-text"><?= $arGift["NAME"] ?></div>
+                                        </div>
+                                        <?
+                                    } ?>
+                                </div>
+                                <?
+                            }
+                            //OFFERS_SELECT_PROPS//
+                            if ((isset($arResult["OFFERS"]) && !empty($arResult["OFFERS"]) && $arSetting["OFFERS_VIEW"]["VALUE"] != "LIST") || (isset($arResult["SELECT_PROPS"]) && !empty($arResult["SELECT_PROPS"]))) { ?>
+                                <div class="catalog-detail-offers-cont">
+                                    <?//OFFERS_PROPS//
+                                    if (isset($arResult["OFFERS"]) && !empty($arResult["OFFERS"]) && $arSetting["OFFERS_VIEW"]["VALUE"] != "LIST") {
+                                        $arSkuProps = array(); ?>
+                                        <div class="catalog-detail-offers" id="<?= $arItemIDs['PROP_DIV']; ?>">
+                                            <? foreach ($arResult["SKU_PROPS"] as &$arProp) {
+                                                if (!isset($arResult["OFFERS_PROP"][$arProp["CODE"]])) {
+                                                    continue;
+                                                }
+                                                $arSkuProps[] = array(
+                                                    "ID" => $arProp["ID"],
+                                                    "SHOW_MODE" => $arProp["SHOW_MODE"]
+                                                ); ?>
+                                                <div class="offer_block"
+                                                     id="<?= $arItemIDs['PROP'] . $arProp['ID']; ?>_cont">
+                                                    <div class="h3"><?= htmlspecialcharsex($arProp["NAME"]); ?></div>
+                                                    <ul id="<?= $arItemIDs['PROP'] . $arProp['ID']; ?>_list"
+                                                        class="<?= $arProp['CODE'] ?><?= $arProp['SHOW_MODE'] == 'PICT' ? ' COLOR' : ''; ?>">
+                                                        <? foreach ($arProp["VALUES"] as $arOneValue) {
+                                                            $arOneValue["NAME"] = htmlspecialcharsbx(
+                                                                $arOneValue["NAME"]
+                                                            ); ?>
+                                                            <li data-treevalue="<?= $arProp['ID'] . '_' . $arOneValue['ID']; ?>"
+                                                                data-onevalue="<?= $arOneValue['ID']; ?>"
+                                                                style="display:none;">
+														<span title="<?= $arOneValue['NAME']; ?>">
+															<? if ("TEXT" == $arProp["SHOW_MODE"]) {
+                                                                echo $arOneValue["NAME"];
+                                                            } elseif ("PICT" == $arProp["SHOW_MODE"]) {
+                                                                if (is_array($arOneValue["PICT"])) { ?>
+                                                                    <img src="<?= $arOneValue['PICT']['SRC'] ?>"
+                                                                         width="<?= $arOneValue['PICT']['WIDTH'] ?>"
+                                                                         height="<?= $arOneValue['PICT']['HEIGHT'] ?>"
+                                                                         alt="<?= $arOneValue['NAME'] ?>"
+                                                                         title="<?= $arOneValue['NAME'] ?>"/>
+                                                                <? } else { ?>
+                                                                    <i style="background:#<?= (!empty($arOneValue['HEX']) ? $arOneValue['HEX'] : 'edeef8') ?>"></i>
+                                                                    <?
+                                                                }
+                                                            } ?>
+														</span>
+                                                            </li>
+                                                            <?
+                                                        } ?>
+                                                    </ul>
+                                                    <div class="bx_slide_left" style="display:none;"
+                                                         id="<?= $arItemIDs['PROP'] . $arProp['ID'] ?>_left"
+                                                         data-treevalue="<?= $arProp['ID'] ?>"></div>
+                                                    <div class="bx_slide_right" style="display:none;"
+                                                         id="<?= $arItemIDs['PROP'] . $arProp['ID'] ?>_right"
+                                                         data-treevalue="<?= $arProp['ID'] ?>"></div>
+                                                </div>
+                                                <?
+                                            }
+                                            unset($arProp); ?>
+                                        </div>
+                                        <?
+                                    }
+                                    //SELECT_PROPS//
+                                    if (isset($arResult["SELECT_PROPS"]) && !empty($arResult["SELECT_PROPS"])) {
+                                        $arSelProps = array(); ?>
+                                        <div class="catalog-detail-offers" id="<?= $arItemIDs['SELECT_PROP_DIV']; ?>">
+                                            <? foreach ($arResult["SELECT_PROPS"] as $key => &$arProp) {
+                                                $arSelProps[] = array(
+                                                    "ID" => $arProp["ID"]
+                                                ); ?>
+                                                <div class="offer_block"
+                                                     id="<?= $arItemIDs['SELECT_PROP'] . $arProp['ID']; ?>">
+                                                    <div class="h3"><?= htmlspecialcharsex($arProp["NAME"]); ?></div>
+                                                    <ul class="<?= $arProp['CODE'] ?>">
+                                                        <? $props = array();
+                                                        foreach ($arProp["DISPLAY_VALUE"] as $arOneValue) {
+                                                            $props[$key] = array(
+                                                                "NAME" => $arProp["NAME"],
+                                                                "CODE" => $arProp["CODE"],
+                                                                "VALUE" => strip_tags($arOneValue)
+                                                            );
+                                                            $props[$key] = !empty($props[$key]) ? strtr(
+                                                                base64_encode(serialize($props[$key])),
+                                                                "+/=",
+                                                                "-_,"
+                                                            ) : ""; ?>
+                                                            <li data-select-onevalue="<?= $props[$key] ?>">
+                                                                <span><?= $arOneValue ?></span>
+                                                            </li>
+                                                            <?
+                                                        } ?>
+                                                    </ul>
+                                                </div>
+                                                <?
+                                            }
+                                            unset($arProp); ?>
+                                        </div>
+                                        <?
+                                    } ?>
+                                </div>
+                                <?
+                            }
+                            //DETAIL_ADVANTAGES//
+                            if ($inAdvantages && !empty($arResult["ADVANTAGES"])) {
+                                global $arAdvFilter;
+                                $arAdvFilter = array(
+                                    "ID" => $arResult["ADVANTAGES"],
+                                    "HIDE_ICONS" => "Y"
+                                ); ?>
+                                <? $APPLICATION->IncludeComponent("bitrix:main.include", "",
+                                                                  array(
+                                                                      "AREA_FILE_SHOW" => "file",
+                                                                      "PATH" => SITE_DIR . "include/advantages.php",
+                                                                      "AREA_FILE_RECURSIVE" => "N",
+                                                                      "EDIT_MODE" => "html",
+                                                                  ),
+                                                                  false,
+                                                                  array("HIDE_ICONS" => "Y")
+                                ); ?>
+                                <?
+                            }
+                        } ?>
+
                     </div>
                     <? if (!$arResult["COLLECTION"]["THIS"]) {
                         //OFFERS_DETAIL_PROPERTIES//?>

@@ -166,9 +166,26 @@
         height: 100%;
     }
 
+
+}
+@media (min-width: 788px) and (max-width: 1254px){
+    .catalog-detail .column.second, .catalog-detail .column.three{
+        max-width:276px;
+        width: 50%;
+    }
+    .catalog-detail .column.first{
+        width: 50%;
+    }
+    li.column-with-desc__item {
+
+        margin-bottom: 14px;
+    }
+    .column-with-desc {
+        width: 88%;
+    }
 }
 
-@media (max-width: 788px) {
+@media  (max-width: 788px){
     ul.column-with-desc__list {
         display: flex;
         justify-content: center;
@@ -192,17 +209,75 @@
         margin: 10px auto;
         max-width: 788px;
         padding: 20px 7px 2px 7px;
+        margin-left: 28px;
     }
 
     .column-with-desc__text {
         width: 215px;
     }
-}
 
-@media (max-width: 449px) {
     li.column-with-desc__item {
         margin-bottom: 25px;
         width: 100%;
+    }
+    .catalog-detail .column.second {
+        display: flex;
+        justify-content: center;
+    }
+    .catalog-detail-element .catalog-detail{
+        margin-left: 4px;
+    }
+    .catalog-detail .price_buy_detail{
+        width: 100%;
+        margin: 12px 0px 0px -5px;
+        padding: 10px;
+    }
+
+}
+@media (max-width: 576px) {
+    .catalog-detail .column.second {
+        display: inline;
+        justify-content: center;
+    }
+    .column-with-desc {
+        margin: 2% -1%;
+        width: 96%;
+    }
+    li.column-with-desc__item{
+        width: 400px;
+        padding: 5px;
+        margin-bottom: 9px;
+    }
+    .column-with-desc__text {
+        width: 100%;
+    }
+    .catalog-detail .price_buy_detail{
+        width: 96%;
+        margin: 9px 4px 2px -2%;
+        padding: 10px;
+    }
+
+}
+
+@media (min-width:1254px) {
+    .catalog-detail .column.second, .catalog-detail .column.three{
+        display: flex;
+    }
+    .column-with-desc {
+        width: 248px;
+        margin-top: 0px;
+        margin-right: 24px;
+    }
+    .catalog-detail-element .catalog-detail{
+        width:63%;
+    }
+    .column.second{
+        width: 572px;
+    }
+}
+@media (max-width: 340px) {
+    li.column-with-desc__item{
+        margin-bottom: 20px;
     }
 
 }
@@ -229,4 +304,17 @@ ul.column-with-desc__list {
 
     line-height: 20px;
     display: flex;
+}
+.catalog-detail .rating{
+    float: none;
+    margin-top: 20px;
+}
+.catalog-detail .catalog-detail-preview-text{
+    margin: 5px 0px 11px 0px;
+}
+@media (max-width:430px){
+    .catalog-detail .column.second, .catalog-detail .column.three{
+        width: 98%;
+    }
+
 }
