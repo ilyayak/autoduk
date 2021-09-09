@@ -5,7 +5,7 @@
       <paths name="autoduk">
         <serverdata>
           <mappings>
-            <mapping deploy="/www/avtoduk.ru" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/www/avtoduk.ru" local="$PROJECT_DIR$/avtoduk" web="/" />
           </mappings>
         </serverdata>
       </paths>
